@@ -49,7 +49,8 @@ char *strtok_custom(char *str, const char *delimiters)
         next_token = NULL;
         return (NULL);
     }
-    char *token = next_token;
+    char *token;
+    token = next_token;
     next_token = _strpbrk(next_token, delimiters);
     if (next_token != NULL)
     {
