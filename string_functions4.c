@@ -34,6 +34,7 @@ char *_strpbrk(char *str, const char *accept)
 char *strtok_custom(char *str, const char *delimiters)
 {
     static char *next_token = NULL;
+    char *token;
 
     if (str != NULL)
     {
@@ -49,7 +50,6 @@ char *strtok_custom(char *str, const char *delimiters)
         next_token = NULL;
         return (NULL);
     }
-    char *token;
     token = next_token;
     next_token = _strpbrk(next_token, delimiters);
     if (next_token != NULL)
