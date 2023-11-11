@@ -167,7 +167,7 @@ int _putfd(char c, int fd);
 int _putsfd(char *str, int fd);
 
 /* string_functions.c*/
-int _strlength(char *);
+int _strlength(const char *);
 int _strcmp(char *s, char *b);
 char *starts_with(const char *, const char *);
 char *_strcat(char *, char *);
@@ -248,7 +248,7 @@ char *_strcpy(char *cat, char *kitty);
 char *_strncat(char *cat, char *kitty, int num);
 char *_strncpy(char *cat, char *kitty, int num);
 char *_strchr(char *p, char x);
-int _strlength(char *);
+int _strlength(const char *);
 void _commentremover(char *cat);
 void filemode(char *);
 void interactivemode(char *argv);
