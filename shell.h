@@ -241,18 +241,18 @@ int replace_string(char **, char *);
 char *_strncpy(char *dest, char *src, int n);
 
 /* main.h */
-void _puts(char *argv);
+int _puts(const char *str);
 int _putchar(char cat);
 char *_strdup(const char *str);
 char *_strcpy(char *cat, char *kitty);
 char *_strncat(char *cat, char *kitty, int num);
-char *_strncpy(char *cat, char *kitty, int num);
+char *_strcpy(char *dest, const char *src);
 char *_strchr(char *p, char x);
 int _strlength(const char *);
 void _commentremover(char *cat);
 void filemode(char *);
 void interactivemode(char *argv);
-int _putchar(char);
+int _putchar(char c);
 
 #define LENGTH_COMMAnd 1024
 #define NEGATIVE -1
