@@ -167,7 +167,7 @@ int _putfd(char c, int fd);
 int _putsfd(char *str, int fd);
 
 /* string_functions.c*/
-int _strlength(const char *);
+int _strlength(char *);
 int _strcmp(char *s, char *b);
 char *starts_with(const char *, const char *);
 char *_strcat(char *, char *);
@@ -241,18 +241,18 @@ int replace_string(char **, char *);
 char *_strncpy(char *dest, char *src, int n);
 
 /* main.h */
-int _puts(const char *str);
+void _puts(char *argv);
 int _putchar(char cat);
 char *_strdup(const char *str);
 char *_strcpy(char *cat, char *kitty);
 char *_strncat(char *cat, char *kitty, int num);
-char *_strcpy(char *dest, const char *src);
+char *_strncpy(char *cat, char *kitty, int num);
 char *_strchr(char *p, char x);
-int _strlength(const char *);
+int _strlength(char *);
 void _commentremover(char *cat);
 void filemode(char *);
 void interactivemode(char *argv);
-int _putchar(char c);
+int _putchar(char);
 
 #define LENGTH_COMMAnd 1024
 #define NEGATIVE -1
