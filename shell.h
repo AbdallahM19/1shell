@@ -248,7 +248,7 @@ char *_strcpy(char *cat, char *kitty);
 char *_strncat(char *cat, char *kitty, int num);
 char *_strncpy(char *cat, char *kitty, int num);
 char *_strchr(char *p, char x);
-int _strlength(char *);
+int _strlength(const char *);
 void _commentremover(char *cat);
 void filemode(char *);
 void interactivemode(char *argv);
