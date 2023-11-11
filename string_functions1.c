@@ -1,74 +1,57 @@
 #include "shell.h"
 
-/**
- * _strlen - Write a function that returns the length of a string.
- * @s: string parameter input
- * Return: length string
- */
-int _strlength(char *string)
+int _putchar(char cat)
 {
-	int count = 0;
+    static int count;
+    static char BUF[BUF_Wr_ON];
 
-	while (*string != '\0')
-	{
-		count++;
-		string++;
-	}
-	return (count);
+    if (cat == BUF_FLUSH || count >= BUF_Wr_ON)
+    {
+        write(1, BUF, count);
+        count = 0;
+    }
+    if (cat != BUF_FLUSH)
+        BUF[count++] = cat;
+    return (1);
 }
 
-/**
- * _strcmp - a function that compares two strings
- * @s1: string 1 input to compare
- * @s2: against this other string 2
- * Return: 0 / postive / negative
-*/
-
-int _strcmp(char *s1, char *s2)
+void _puts(char *argv)
 {
-	int i;
-	int result = 0;
-/* use for loop*/
-/*calculate the result to compare*/
-	for (i = 0; s1[i] != '\0' && result == 0; i++)
-	{
-		result = s1[i] - s2[i];
-	}
-	return (result);
+    while (*argv != '\0')
+    {
+        _putchar(*argv);
+        argv++;
+    }
 }
 
-/**
- * start_with - chaecks if needle starts with haystack
- * @haystack: string to seach
- * @needle: substring to find
- * Return: address
-*/
-char *starts_with(const char *cat, const char *kitty)
+char *_strdup(const char *str)
 {
-	while (*kitty)
-		if (*kitty++ != *cat++)
-			return (NULL);
-	return ((char *)cat);
+    int i;
+    char *p;
+    int length = _strlength(str);
+
+    if (str == NULL)
+        return (NULL);
+    p = malloc((length + 1) * sizeof(char));
+    if (p == NULL)
+        return (NULL);
+    for (i = 0; i < length; i++)
+        p[i] = str[i];
+    p[i] = '\0';
+    return (p);
 }
 
-/**
- * _strcat - Write a function that concatenates two strings.
- * @dest: pointer to destnation input
- * @src: pointer to source input
- * Return: pointer to resulting string @dest
- */
-char *_strcat(char *dest, char *src)
+char *_strcpy(char *cat, char *kitty)
 {
-	int i = 0, j = 0;
+    int x = 0;
 
-	while (dest[j] != '\0')
-		j++;
-	while (src[i] != '\0')
-	{
-		dest[j] = src[i];
-		j++;
-		i++;
-	}
-	dest[j] = '\0';
-	return (dest);
+    if (cat == kitty || kitty == NULL)
+        return (cat);
+    while (kitty[x] != '\0')
+    {
+        cat[x] = kitty[x];
+        x++;
+    }
+    cat[x] = '\0';
+    return (cat);
 }
