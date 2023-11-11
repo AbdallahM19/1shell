@@ -34,7 +34,7 @@ int _erratoi(char *s)
  * Return: 0 if no numbers in string,
  * converted number otherwise -1 on error
 */
-void print_error (info_t *info, char *estr)
+void print_error(info_t *info, char *estr)
 {
 	_eputs(info->fname);
 	_eputs(": ");
@@ -91,7 +91,7 @@ int print_d(int input, int fd)
  * @flags: argument flags
  * Return: string
 */
-char *convert_number (long int num, int base, int flags)
+char *convert_number(long int num, int base, int flags)
 {
 	static char *array;
 	static char buffer[50];
