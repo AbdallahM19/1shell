@@ -10,7 +10,7 @@ int _putchar(char cat)
 		write(1, BUF, count);
 		count = 0;
 	}
-	if (cat != WRITE_BUF_SIZE)
+	if (cat != BUF_FLUSH)
 		BUF[count++] = cat;
 	return (1);
 }

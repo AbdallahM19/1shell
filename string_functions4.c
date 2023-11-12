@@ -1,11 +1,9 @@
 #include "shell.h"
 
-int _strspn(const char *str, const char *accept)
-{
+int _strspn(const char *str, const char *accept) {
     int i, j;
 
-    for (i = 0; str[i] != '\0'; i++)
-    {
+    for (i = 0; str[i] != '\0'; i++) {
         for (j = 0; accept[j] != '\0'; j++)
         {
             if (str[i] == accept[j])
@@ -20,8 +18,7 @@ int _strspn(const char *str, const char *accept)
 char *_strpbrk(char *str, const char *accept)
 {
     int i, j;
-    for (i = 0; str[i] != '\0'; i++)
-    {
+    for (i = 0; str[i] != '\0'; i++) {
         for (j = 0; accept[j] != '\0'; j++)
         {
             if (str[i] == accept[j])
@@ -33,8 +30,8 @@ char *_strpbrk(char *str, const char *accept)
 
 char *strtok_custom(char *str, const char *delimiters)
 {
+	char *token;
     static char *next_token = NULL;
-    char *token;
 
     if (str != NULL)
     {
@@ -48,7 +45,7 @@ char *strtok_custom(char *str, const char *delimiters)
     if (*next_token == '\0')
     {
         next_token = NULL;
-        return (NULL);
+        return (NULL); 
     }
     token = next_token;
     next_token = _strpbrk(next_token, delimiters);
