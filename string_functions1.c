@@ -45,10 +45,13 @@ int _strcmp(char *s1, char *s2)
 */
 char *starts_with(const char *cat, const char *kitty)
 {
-	while (*kitty)
-		if (*kitty++ != *cat++)
-			return (NULL);
-	return ((char *)cat);
+    while (*kitty) {
+        if (*kitty != *cat)
+            return NULL;
+        kitty++;
+        cat++;
+    }
+    return (char *)cat;
 }
 
 /**

@@ -16,10 +16,12 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <signal.h>
+#include <sys/stat.h>
 
 #define READ_BUF_SIZE 1024
 #define WRITE_BUF_SIZE 1024
 #define BUF_FLUSH -1
+
 
 #define CMD_NORM	0
 #define CMD_OR		1
@@ -167,6 +169,8 @@ int _eputchar(char);
 int _putfd(char c, int fd);
 int _putsfd(char *str, int fd);
 
+/* main.c */
+void execute_command(char *, int);
 /* string_functions.c*/
 int _strlength(char *);
 int _strcmp(char *s, char *b);
