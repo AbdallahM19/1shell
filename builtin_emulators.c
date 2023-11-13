@@ -6,20 +6,21 @@
 */
 int _myexit (info_t *info)
 {
-	int exitchek;
+	int exitcheck;
 
 	if (info->argv[1])
 	{
 		exitchek = _erratoi(info->argv[1]);
-		if (exitchek == -1)
+		if (exitcheck == -1)
 		{
 			info->status = 2;
 			print_error(info, "Illegal numbers: ");
 			_eputs(info->argv[1]);
 			_eputchar('\n');
+			return (1);
 		}
-	info->err_num = _erratoi(info->argv[1]);
-	return (-2);
+		info->err_num = _erratoi(info->argv[1]);
+		return (-2);
 	}
 	info->err_num = -1;
 	return (-2);
