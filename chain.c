@@ -1,13 +1,12 @@
 #include "shell.h"
 
 /**
- * is_chain - test if current char in buffer is a chain delimeter
- * @info: the parameter struct
- * @buf: the char buffer
- * @p: address of current position in buf
- *
- * Return: 1 if chain delimeter, 0 otherwise
- */
+ * is_chain - check the char if it is a chain
+ * @info: first parameter
+ * @buf: seconed one
+ * @p: third one
+ * Return: 1 or 0
+*/
 int is_chain(info_t *info, char *buf, size_t *p)
 {
 	size_t j = *p;
@@ -18,15 +17,15 @@ int is_chain(info_t *info, char *buf, size_t *p)
 		j++;
 		info->cmd_buf_type = CMD_OR;
 	}
-	else if (buf[j] == '&' && buf[j + 1] == '&')
+	else if (buf[j] == '&' && buf[j+1] == '&')
 	{
 		buf[j] = 0;
 		j++;
 		info->cmd_buf_type = CMD_AND;
 	}
-	else if (buf[j] == ';') /* found end of this command */
+	else if (buf[j] == ';')
 	{
-		buf[j] = 0; /* replace semicolon with null */
+		buf[j] = 0;
 		info->cmd_buf_type = CMD_CHAIN;
 	}
 	else
@@ -36,15 +35,14 @@ int is_chain(info_t *info, char *buf, size_t *p)
 }
 
 /**
- * check_chain - checks we should continue chaining based on last status
- * @info: the parameter struct
- * @buf: the char buffer
- * @p: address of current position in buf
- * @i: starting position in buf
- * @len: length of buf
- *
- * Return: Void
- */
+ * check_chain - check the last status
+ * @info: first parameter
+ * @buf: seconed one
+ * @p: pointer 
+ * @i: start of the buf
+ * @len: size of the buf
+ * Return: Don't return anything
+*/
 void check_chain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
 {
 	size_t j = *p;
@@ -53,28 +51,26 @@ void check_chain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
 	{
 		if (info->status)
 		{
-			buf[i] = 0;
+			buf[j] = 0;
 			j = len;
 		}
 	}
 	if (info->cmd_buf_type == CMD_OR)
 	{
-		if (!info->status)
+		if (info->status)
 		{
-			buf[i] = 0;
+			buf[j] = 0;
 			j = len;
 		}
 	}
-
 	*p = j;
 }
 
 /**
- * replace_alias - replaces an aliases in the tokenized string
- * @info: the parameter struct
- *
- * Return: 1 if replaced, 0 otherwise
- */
+ * replace_alias - replace an alias 
+ * @info: struct include arguments
+ * Return: 1 or 0
+*/
 int replace_alias(info_t *info)
 {
 	int i;
@@ -88,7 +84,7 @@ int replace_alias(info_t *info)
 			return (0);
 		free(info->argv[0]);
 		p = _strchr(node->str, '=');
-		if (!p)
+		if(!p)
 			return (0);
 		p = _strdup(p + 1);
 		if (!p)
@@ -99,11 +95,10 @@ int replace_alias(info_t *info)
 }
 
 /**
- * replace_vars - replaces vars in the tokenized string
- * @info: the parameter struct
- *
- * Return: 1 if replaced, 0 otherwise
- */
+ * replace_vars - replace one vars
+ * @info: struct
+ * Return: 1 or 0
+*/
 int replace_vars(info_t *info)
 {
 	int i = 0;
@@ -140,12 +135,11 @@ int replace_vars(info_t *info)
 }
 
 /**
- * replace_string - replaces string
- * @old: address of old string
- * @new: new string
- *
- * Return: 1 if replaced, 0 otherwise
- */
+ * replace_string - change the string
+ * @old: first parameter
+ * @new: second one
+ * Return: 1 or 0
+*/
 int replace_string(char **old, char *new)
 {
 	free(*old);

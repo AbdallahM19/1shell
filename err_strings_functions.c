@@ -1,11 +1,10 @@
 #include "shell.h"
 
 /**
- *_eputs - prints an input string
- * @str: the string to be printed
- *
- * Return: Nothing
- */
+ * _eputs - print a string to the standered error
+ * @str: pointer to the string
+ * Return: void
+*/
 void _eputs(char *str)
 {
 	int i = 0;
@@ -20,12 +19,10 @@ void _eputs(char *str)
 }
 
 /**
- * _eputchar - writes the character c to stderr
- * @c: The character to print
- *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
- */
+ * _eputchar - print one characther to the standered error
+ * @c: charachter to be printed
+ * Return: the bytes we will print
+*/
 int _eputchar(char c)
 {
 	static int i;
@@ -42,13 +39,11 @@ int _eputchar(char c)
 }
 
 /**
- * _putfd - writes the character c to given fd
- * @c: The character to print
- * @fd: The filedescriptor to write to
- *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
- */
+ * _putfd - print a one char to specific place
+ * @c: characther to be printed
+ * @fd: where we will print
+ * Return: 1 
+*/
 int _putfd(char c, int fd)
 {
 	static int i;
@@ -65,12 +60,11 @@ int _putfd(char c, int fd)
 }
 
 /**
- *_putsfd - prints an input string
- * @str: the string to be printed
- * @fd: the filedescriptor to write to
- *
- * Return: the number of chars put
- */
+ * _putsfd - print a string to specific place
+ * @str: pointer to string to be printed
+ * @fd: where we will print
+ * Return: the string printed
+*/
 int _putsfd(char *str, int fd)
 {
 	int i = 0;

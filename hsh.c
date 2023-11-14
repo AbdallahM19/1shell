@@ -1,12 +1,5 @@
 #include "shell.h"
 
-/**
- * hsh - main shell loop
- * @info: the parameter & return info struct
- * @av: the argument vector from main()
- *
- * Return: 0 on success, 1 on error, or error code
- */
 int hsh(info_t *info, char **av)
 {
 	ssize_t r = 0;
@@ -45,16 +38,15 @@ int hsh(info_t *info, char **av)
 
 /**
  * find_builtin - finds a builtin command
- * @info: the parameter & return info struct
- *
- * Return: -1 if builtin not found,
- *			0 if builtin executed successfully,
- *			1 if builtin found but not successful,
- *			-2 if builtin signals exit()
- */
+ * 
+ * @info: struct include arguments
+ * 
+ * Return: -1 or 0 or -2 or 1
+*/
 int find_builtin(info_t *info)
 {
 	int i, built_in_ret = -1;
+
 	builtin_table builtintbl[] = {
 		{"exit", _myexit},
 		{"env", _myenv},
@@ -78,11 +70,10 @@ int find_builtin(info_t *info)
 }
 
 /**
- * find_cmd - finds a command in PATH
- * @info: the parameter & return info struct
- *
+ * find_cmd - finds a command in path
+ * @info: struct argument
  * Return: void
- */
+*/
 void find_cmd(info_t *info)
 {
 	char *path = NULL;
@@ -99,7 +90,6 @@ void find_cmd(info_t *info)
 			k++;
 	if (!k)
 		return;
-
 	path = find_path(info, _getenv(info, "PATH="), info->argv[0]);
 	if (path)
 	{
@@ -120,11 +110,10 @@ void find_cmd(info_t *info)
 }
 
 /**
- * fork_cmd - forks a an exec thread to run cmd
- * @info: the parameter & return info struct
- *
+ * fork_cmd - forks a process
+ * @info: struct include arguments
  * Return: void
- */
+*/
 void fork_cmd(info_t *info)
 {
 	pid_t child_pid;
@@ -132,7 +121,6 @@ void fork_cmd(info_t *info)
 	child_pid = fork();
 	if (child_pid == -1)
 	{
-		/* TODO: PUT ERROR FUNCTION */
 		perror("Error:");
 		return;
 	}
@@ -145,7 +133,6 @@ void fork_cmd(info_t *info)
 				exit(126);
 			exit(1);
 		}
-		/* TODO: PUT ERROR FUNCTION */
 	}
 	else
 	{
