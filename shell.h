@@ -17,15 +17,16 @@
 #include <sys/wait.h>
 #include <signal.h>
 #include <sys/stat.h>
-
-#define READ_BUF_SIZE 1024
-#define WRITE_BUF_SIZE 1024
-#define BUF_FLUSH -1
+extern char **environ;
 
 #define LENGTH_COMMAnd 1024
 #define NEGATIVE -1
 #define BUF_Wr_ON 5000
 #define BUF_RD_ON 5000
+#define READ_BUF_SIZE 1024
+#define WRITE_BUF_SIZE 1024
+#define BUF_FLUSH -1
+
 
 #define CMD_NORM	0
 #define CMD_OR		1
@@ -100,6 +101,80 @@ typedef struct passinfo
 	int readfd;
 	int histcount;
 } info_t;
+/*main.c*/
+void execute_command(char *command, int interactive);
+void non_interactive();
+void interactive_mode();
+/*string fuction4*/
+int _strspn(const char *str, const char *accept);
+char *_strpbrk(char *str, const char *accept);
+char *strtok_custom(char *str, const char *delimiters);
+/*string function 3*/
+char *_strncat(char *cat, char *kitty, int num);
+char *_strncpy(char *cat, char *kitty, int num);
+char *_strchr(char *p, char x);
+/*string function 2*/
+int _putchar(char cat);
+void _puts(char *argv);
+char *_strdup( const char *str);
+char *_strcpy(char *cat, char *kitty);
+/*string function 1*/
+int _strlength(char *);
+int _strcmp(char *s1, char *s2);
+char *starts_with(const char *cat, const char *kitty);
+char *_strcat(char *dest, char *src);
+/*path.c*/
+int is_cmd(info_t *info, char *path);
+char *dup_chars(char *pathstr, int start, int stop);
+char *find_path(info_t *info, char *pathstr, char *cmd);
+/*more function 2*/
+void error_message(const char *program_name, int error_code, const char *file_name);
+/*void error_massege(char *cat, char *argv);*/
+int _erratoi(char *s);
+void print_error (info_t *info, char *estr);
+int print_d(int input, int fd);
+char *convert_number (long int num, int base, int flags);
+void _commentremover(char *cat);
+/*more function.c*/
+int is_delim (char c, char *delim);
+int isalpha (int c);
+int _atoi (char *s);
+/*memory functtion 2*/
+int bfree (void **ptr);
+/*memory fuction*/
+char *_memset (char *s, char b, unsigned int n);
+void ffree (char **pp);
+void *_realloc (void *ptr, unsigned int old_size, unsigned int new_size);
+/*liststr2.c*/
+size_t list_len(const list_t *h);
+char **list_to_strings(list_t *head);
+size_t print_list(const list_t *h);
+list_t *node_starts_with (list_t *node, char *prefix, char c);
+ssize_t get_node_index (list_t *head, list_t *node);
+/*liststr.c*/
+list_t *add_node (list_t **head, const char *str, int num);
+list_t *add_node_end (list_t **head, const char *str, int num);
+size_t print_list_str (const list_t *h);
+int delete_node_at_index (list_t **head, unsigned int index);
+void free_list (list_t **head_ptr);
+/*info.c*/
+void clear_info (info_t *info);
+void set_info (info_t *info, char **av);
+void free_info (info_t *info, int all);
+/*hsh.c*/
+int find_builtin(info_t *info);
+void find_cmd(info_t *info);
+void fork_cmd(info_t *info);
+/*getlie.c*/
+void sigintHandler(__attribute__((unused)) int sig_num);
+int _getline(info_t *info, char **ptr, size_t *length);
+ssize_t read_buf(info_t *info, char *buf, size_t *i);
+ssize_t get_input(info_t *info);
+ssize_t input_buf(info_t *info, char **buf, size_t *len);
+
+char *_strncat(char *cat, char *kitty, int num);
+char *_strncpy(char *cat, char *kitty, int num);
+
 
 #define INFO_INIT \
 {NULL, NULL, NULL, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, \
@@ -115,19 +190,6 @@ typedef struct builtin
 	int (*func)(info_t *);
 } builtin_table;
 
-/* hsh.c */
-int hsh(info_t *, char **);
-int find_builtin(info_t *);
-void find_cmd(info_t *);
-void fork_cmd(info_t *);
-
-/* path.c */
-int is_cmd(info_t *, char *);
-char *dup_chars(char *, int, int);
-char *find_path(info_t *, char *, char *);
-
-/* loophsh.c */
-int loophsh(char **);
 
 /*builtin_emulators.c*/
 int _myexit (info_t *);
@@ -136,19 +198,10 @@ int _myhelp (info_t *);
 
 /* builtin_emulators2.c*/
 int _myhistory (info_t *);
-int _myalias (info_t *);
-
-/* getline.c module */
-ssize_t get_input(info_t *);
-ssize_t input_buf(info_t *, char **, size_t *);
-ssize_t read_buf(info_t *, char *, size_t *);
-int _getline(info_t *, char **, size_t *);
-void sigintHandler(__attribute__((unused)) int);
-
-/* info.c */
-void clear_info(info_t *);
-void set_info(info_t *, char **);
-void free_info(info_t *, int);
+int unset_alias(info_t *info, char *str);
+int set_alias(info_t *info, char *str);
+int print_alias(list_t *node);
+int _myalias (info_t *info);
 
 /* env.c module */
 char *_getenv(info_t *, const char *);
@@ -163,11 +216,11 @@ int _unsetenv(info_t *, char *);
 int _setenv(info_t *, char *, char *);
 
 /* file_io_functions.c */
-char *get_history_file(info_t *);
-int write_history(info_t *);
-int read_history(info_t *);
-int build_history_list(info_t *, char *, int );
-int renumber_history(info_t *);
+char *get_history_file(info_t *info);
+int write_history(info_t *info);
+int read_history(info_t *info);
+int build_history_list(info_t *info, char *buf, int linecount);
+int renumber_history(info_t *info);
 
 /* err_string_functions.c*/
 void _eputs(char *);
@@ -175,74 +228,11 @@ int _eputchar(char);
 int _putfd(char c, int fd);
 int _putsfd(char *str, int fd);
 
-/* main.c */
-void execute_command(char *, int);
-
-/* string_functions.c*/
-int _strlength(char *);
-int _strcmp(char *, char *);
-char *starts_with(const char *, const char *);
-char *_strcat(char *, char *);
-
-/* string_functions2.c */
-char *_strcpy(char *, char *);
-char *_strdup(const char *);
-void _puts(char *);
-int _putchar(char);
-
-/* string_functions3.c */
-char *_strncat(char *, char *, int);
-char *_strcpy(char *dest, char *src);
-char *_strchr(char *, char);
-char *_strncpy(char *dest, char *src, int n);
-
-/* string_functions4.c */
-char **_strtow(char *, char *);
-char **_strtow2(char *, char);
-
-/* memory_functions.c */
-char *_memset(char *, char, unsigned int);
-void ffree(char **);
-void *_realloc(void *, unsigned int, unsigned int);
-
-/* memory_functions2.c */
-int bfree(void **);
-
-/* more_functions.c*/
-int interactive (info_t *);
-int is_delim (char, char *);
-int isalpha (int);
-int _atoi (char *);
-
-/* more_functions2.c*/
-int _erratoi (char *);
-void print_error (info_t *, char *);
-int print_d(int, int);
-char *convert_number (long int, int, int);
-void remove_comments (char *);
-
-char *strtok_custom(char *str, const char *delimiters);
-char *_strpbrk(char *str, const char *accept);
-int _strspn(const char *str, const char *accept);
-
 /**/
 void print_env(char **env);
+char *_strncpy(char *dest, char *src, int n);
 /**/
 
-
-/* liststr.c */
-list_t *add_node(list_t **, const char *, int);
-list_t *add_node_end(list_t **, const char *, int);
-size_t print_list_str(const list_t *);
-int delete_node_at_index(list_t **, unsigned int);
-void free_list(list_t **);
-
-/* liststr2.c */
-size_t list_len(const list_t *);
-char **list_to_strings(list_t *);
-size_t print_list(const list_t *);
-list_t *node_starts_with (list_t *, char *, char);
-ssize_t get_node_index (list_t *, list_t *);
 
 /* chain.c */
 int is_chain(info_t *, char *, size_t *);
@@ -250,19 +240,5 @@ void check_chain(info_t *, char *, size_t *, size_t, size_t);
 int replace_alias(info_t *);
 int replace_vars(info_t *);
 int replace_string(char **, char *);
-
-/* main.h */
-void _puts(char *argv);
-int _putchar(char cat);
-char *_strdup(const char *str);
-char *_strcpy(char *cat, char *kitty);
-char *_strncat(char *cat, char *kitty, int num);
-char *_strncpy(char *cat, char *kitty, int num);
-char *_strchr(char *p, char x);
-int _strlength(char *);
-void _commentremover(char *cat);
-void filemode(char *);
-void interactivemode(char *argv);
-int _putchar(char);
 
 #endif /* SHELL_H */

@@ -5,20 +5,20 @@
  * @info: parameter struct
  * Return: allocated string containg history file
 */
-char *get_history_file(info_t *info)
+char *get_history_file (info_t *info)
 {
 	char *buf, *dir;
 
 	dir = _getenv(info, "HOME=");
 	if (!dir)
 		return (NULL);
-	buf = malloc(sizeof(char) * (_strlen(dir) + _strlen(HIST_FILE) + 2));
-	if (!buf)
+	buf = malloc(sizeof(char) * (_strlength(dir) + _strlength(HIST_FILE) + 2));
+	if (buf)
 		return (NULL);
 	buf[0] = 0;
 	_strcpy(buf, dir);
 	_strcat(buf, "/");
-	_strcat(buf, HIST_FILE);
+	strcat(buf, HIST_FILE);
 	return (buf);
 }
 
@@ -33,7 +33,7 @@ int write_history(info_t *info)
 	char *filename = get_history_file(info);
 	list_t *node = NULL;
 
-	if (!filename)
+	if (filename)
 		return (-1);
 	fd = open(filename, O_CREAT | O_TRUNC | O_RDWR, 0644);
 	free(filename);
@@ -57,18 +57,17 @@ int write_history(info_t *info)
 int read_history (info_t *info)
 {
 	int i, last = 0, linecount = 0;
-	ssize_t fd, rdlen, fsize = 0;
+	ssize_t fd, rdlen, fsize= 0;
 	struct stat st;
 	char *buf = NULL, *filename = get_history_file(info);
 
 	if (!filename)
 		return (0);
-
 	fd = open(filename, O_RDONLY);
 	free(filename);
 	if (fd == -1)
 		return (0);
-	if (!fstat(fd, &st))
+	if (!fstat (fd, &st))
 		fsize = st.st_size;
 	if (fsize < 2)
 		return (0);
@@ -79,7 +78,7 @@ int read_history (info_t *info)
 	buf[fsize] = 0;
 	if (rdlen <= 0)
 		return (free(buf), 0);
-	close(fd);
+	close (fd);
 	for (i = 0; i < fsize; i++)
 		if (buf[i] == '\n')
 		{

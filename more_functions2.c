@@ -34,7 +34,7 @@ int _erratoi(char *s)
  * Return: 0 if no numbers in string,
  * converted number otherwise -1 on error
 */
-void print_error(info_t *info, char *estr)
+void print_error (info_t *info, char *estr)
 {
 	_eputs(info->fname);
 	_eputs(": ");
@@ -44,8 +44,22 @@ void print_error(info_t *info, char *estr)
 	_eputs(": ");
 	_eputs(estr);
 }
-
-/**
+/*void error_message(const char *program_name, int error_code, const char *file_name) 
+{
+    fprintf(stderr, "%s: %d: %s: ", program_name, error_code, file_name);
+    perror("");
+}	_eputs(estr);
+}
+*void error_massege(char *cat, char *argv)
+{
+	_eputs("./hsh");
+	_eputs(": ");
+	_eputs("1: ");
+	_eputs(argv[1]);
+	_eputs(": ");
+	_eputs(cat);
+}
+**
  * print_d = function prints a decimal (integer) number (base 10)
  * @input: the input
  * @fd: the filedescriptor to write to
@@ -91,7 +105,7 @@ int print_d(int input, int fd)
  * @flags: argument flags
  * Return: string
 */
-char *convert_number(long int num, int base, int flags)
+char *convert_number (long int num, int base, int flags)
 {
 	static char *array;
 	static char buffer[50];
@@ -108,7 +122,7 @@ char *convert_number(long int num, int base, int flags)
 	ptr = &buffer[49];
 	*ptr = '\0';
 	do {
-		*--ptr = array[n % base];
+		*--ptr = array [n % base];
 		n /= base;
 	} while (n != 0);
 	if (sign)
@@ -116,14 +130,21 @@ char *convert_number(long int num, int base, int flags)
 	return (ptr);
 }
 
-void remove_comments (char *buf)
+void _commentremover(char *cat)
 {
-	int c;
-
-	for (c = 0; buf[c] != '\0'; c++)
-		if (buf[c] == '#' && (!c || buf[c - 1] == ' '))
+	int c = 0;
+	while (cat[c] != '\0')
+	{
+		if(cat[c] == '#')
 		{
-			buf[c] = '\0';
+			cat[c] = '\0';
 			break;
 		}
+		else if (!c || cat[c - 1] == ' ')
+		{
+			cat[c] = '\0';
+			break;
+		}
+		c++;
+	}
 }

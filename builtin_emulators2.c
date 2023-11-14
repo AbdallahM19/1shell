@@ -5,7 +5,7 @@
  * @info: struct include the arguments
  * Return: 0
 */
-int _myhistory(info_t *info)
+int _myhistory (info_t *info)
 {
 	print_list(info->history);
 	return (0);
@@ -28,7 +28,7 @@ int unset_alias(info_t *info, char *str)
 	c = *p;
 	*p = 0;
 	ret = delete_node_at_index(&(info->alias),
-	get_node_index(info->alias,node_starts_with(info->alias, str, -1)));
+	get_node_index(info->alias, node_starts_with(info->alias, str, -1)));
 	*p = c;
 	return (ret);
 }
@@ -59,8 +59,7 @@ int set_alias(info_t *info, char *str)
 */
 int print_alias(list_t *node)
 {
-	char *p = NULL;
-	char *a = NULL;
+	char *p = NULL, *a = NULL;
 
 	if (node)
 	{
@@ -100,9 +99,9 @@ int _myalias (info_t *info)
 	{
 		p = _strchr(info->argv[i], '=');
 		if (p)
-			set_alias(info, info->argv[i]);
+		set_alias(info, info->argv[i]);
 		else
-			print_alias(node_starts_with(info->alias, info->argv[i], '='));
+		print_alias(node_starts_with(info->alias, info->argv[i], '='));
 	}
 	return (0);
 }

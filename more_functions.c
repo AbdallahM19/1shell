@@ -1,15 +1,4 @@
 #include"shell.h"
-
-/**
- * interactive - returns true if shell is interactive mode
- * @info: struct address
- * Return: 1 if interactive mode, 0 otherwise
- */
-int interactive (info_t *info)
-{
-	return (isatty(STDIN_FILENO) && info->readfd <= 2);
-}
-
 /**
  * is_delim checks if character is a delimeter
  * @c: the char to check
@@ -51,6 +40,7 @@ int _atoi (char *s)
 	{
 		if (s[i] == '-')
 			sign *= -1;
+
 		if (s[i] >= '0' && s[i] <= '9')
 		{
 			flag = 1;
