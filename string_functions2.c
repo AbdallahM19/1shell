@@ -1,52 +1,61 @@
 #include "shell.h"
 
-int _putchar(char cat)
+int _putchar(char c)
 {
-	static int count;
-	static char BUF[BUF_Wr_ON];
+	static int i;
+	static char buf[WRITE_BUF_SIZE];
 
-	if (cat == NEGATIVE || count >= BUF_Wr_ON)
+	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
 	{
-		write(1, BUF, count);
-		count = 0;
+		write(1, buf, i);
+		i = 0;
 	}
-	if (cat != BUF_FLUSH)
-		BUF[count++] = cat;
+	if (c != BUF_FLUSH)
+		buf[i++] = c;
 	return (1);
 }
 
-void _puts(char *argv)
+void _puts(char *str)
 {
-	int x;
+	int i = 0;
 
-	for (x = 0; argv[x] != '\0'; x++)
-		_putchar(argv[x]);
+	if (!str)
+		return;
+	while (str[i] != '\0')
+	{
+		_putchar(str[i]);
+		i++;
+	}
 }
 
-char *_strdup( const char *str) /*dublicate a string*/
+char *_strdup(const char *str)
 {
-	int i;
-	char *p;
-	int length = strlen(str);
+	int length = 0;
+	char *ret;
 
 	if (str == NULL)
 		return (NULL);
-	p = malloc(length + 1 * sizeof(char));
-	if (p == 0)
+	while (*str++)
+		length++;
+	ret = malloc(sizeof(char) * (length + 1));
+	if (!ret)
 		return (NULL);
-	for (i = 0; i < length; i++)
-		p[i] = str[i];
-	return (p);
+	for (length++; length--;)
+		ret[length] = *--str;
+	return (ret);
 }
 
-char *_strcpy(char *cat, char *kitty)
+char *_strcpy(char *dest, char *src)
 {
-	int x = 0;
+	int i = 0;
 
-	if (cat == kitty || kitty == 0)
-		return (cat);
-	for (; kitty[x] != '\0'; x++)
-		cat[x] = kitty[x];
-	cat[x] = '\0';
-	return (cat);
+	if (dest == src || src == 0)
+		return (dest);
+	while (src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = 0;
+	return (dest);
 }
