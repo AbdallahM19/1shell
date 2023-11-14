@@ -9,11 +9,12 @@
 int is_cmd(info_t *info, char *path)
 {
 	struct stat st;
-	(void)info;
 
-	if (!path || stat(path, &st) != 0)
+	(void)info;
+	if (!path || stat(path, &st))
 		return (0);
-	if (S_ISREG(st.st_mode))
+
+	if (st.st_mode & S_IFREG)
 		return (1);
 	return (0);
 }
@@ -24,7 +25,7 @@ int is_cmd(info_t *info, char *path)
  *@start: index to start
  *@stop: index to stop
  * Return: pointer
-*
+*/
 char *dup_chars(char *pathstr, int start, int stop)
 {
 	static char buf[1024];
@@ -35,8 +36,8 @@ char *dup_chars(char *pathstr, int start, int stop)
 			buf[k++] = pathstr[i];
 	buf[k] = 0;
 	return (buf);
-}*/
-char *dup_chars(char *pathstr, int start, int stop)
+}
+/*char *dup_chars(char *pathstr, int start, int stop)
 {
     static char buf[1024];
     int i = 0, k = 0;
@@ -51,7 +52,7 @@ char *dup_chars(char *pathstr, int start, int stop)
             buf[k++] = pathstr[i];
     buf[k] = 0;
     return (buf);
-}
+}*/
 
 /**
  * findpath - find the cmd in the path
@@ -88,7 +89,7 @@ char *find_path(info_t *info, char *pathstr, char *cmd)
                 return (path);
             if (!pathstr[i])
                 break;
-            curr_pos = i + 1;  
+            curr_pos = i;  
         }
         i++;
     }
