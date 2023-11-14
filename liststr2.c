@@ -39,9 +39,9 @@ char **list_to_strings(list_t *head)
 		str = malloc (_strlength(node->str) + 1);
 		if (!str)
 		{
-			for (j=0; j < i; j++)
-				free (strs[j]);
-			free (strs);
+			for (j = 0; j < i; j++)
+				free(strs[j]);
+			free(strs);
 			return (NULL);
 		}
 		str = _strcpy(str, node->str);
