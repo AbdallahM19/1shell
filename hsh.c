@@ -5,7 +5,7 @@
  * @info: struct include arguments
  * 
  * Return: -1 or 0 or -2 or 1
-*
+*/
 int find_builtin(info_t *info)
 {
 	int i, built_in_ret = -1;
@@ -27,16 +27,17 @@ int find_builtin(info_t *info)
 		{
 			info->line_count++;
 			built_in_ret = builtintbl[i].func(info);
+			break;
 		}
 	return (built_in_ret);
-}*/
+}
 
 /**
  * find_cmd - finds a command in path
  * @info: struct argument
  * Return: void
 */
-/*void find_cmd(info_t *info)
+void find_cmd(info_t *info)
 {
 	char *path = NULL;
 	int i, k;
@@ -53,7 +54,7 @@ int find_builtin(info_t *info)
 			k++;
 	if (!k)
 		return;
-	path = find_path(info, _getenv(info, "PATH= "), info->argv[0]);
+	path = find_path(info, _getenv(info, "PATH="), info->argv[0]);
 	if (path)
 	{
 		info->path = path;
@@ -61,8 +62,8 @@ int find_builtin(info_t *info)
 	}
 	else
 	{
-		if ((interactive_mode || _getenv(info, "PATH=") ||
-			info->argv[0][0] == '/' )&&  is_cmd(info, info->argv[0]))
+		if ((interactive(info) || _getenv(info, "PATH=") ||
+			info->argv[0][0] == '/' ) &&  is_cmd(info, info->argv[0]))
 			fork_cmd(info);
 		else if (*(info->arg) != '\n')
 		{
@@ -70,21 +71,21 @@ int find_builtin(info_t *info)
 			print_error(info, "not found\n");
 		}
 	}
-}*/
+}
 
 /**
  * fork_cmd - forks a process
  * @info: struct include arguments
  * Return: void
-
+*/
 void fork_cmd(info_t *info)
 {
 	pid_t child_pid;
-	child_pid = fork();
 
+	child_pid = fork();
 	if (child_pid == -1)
 	{
-		perror("Error: ");
+		perror("Error:");
 		return;
 	}
 	if (child_pid == 0)
@@ -107,4 +108,4 @@ void fork_cmd(info_t *info)
 				print_error(info, "Permission donied\n");
 		}
 	}
-}*/
+}
