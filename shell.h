@@ -17,12 +17,14 @@
 #include <sys/wait.h>
 #include <signal.h>
 #include <sys/stat.h>
+
 extern char **environ;
 
 #define LENGTH_COMMAnd 1024
 #define NEGATIVE -1
 #define BUF_Wr_ON 5000
 #define BUF_RD_ON 5000
+
 #define READ_BUF_SIZE 1024
 #define WRITE_BUF_SIZE 1024
 #define BUF_FLUSH -1
