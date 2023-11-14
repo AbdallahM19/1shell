@@ -26,17 +26,6 @@ list_t *add_node (list_t **head, const char *str, int num)
 			return (NULL);
 		}
 	}
-
-    
-        
-          
-    
-
-        
-        Expand All
-    
-    @@ -45,17 +45,17 @@ list_t *add_node_end (list_t **head, const char *str, int num)
-  
 	new_head->next = *head;
 	*head = new_head;
 	return (new_head);
