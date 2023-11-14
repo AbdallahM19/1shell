@@ -5,16 +5,16 @@
  * @s: string parameter input
  * Return: length string
  */
-int _strlength(char *string)
+int _strlen(char *s)
 {
-	int count = 0;
+	int i = 0;
 
-	while (*string != '\0')
-	{
-		count++;
-		string++;
-	}
-	return (count);
+	if (!s)
+		return (0);
+
+	while (*s++)
+		i++;
+	return (i);
 }
 
 /**
@@ -26,15 +26,17 @@ int _strlength(char *string)
 
 int _strcmp(char *s1, char *s2)
 {
-	int i;
-	int result = 0;
-/* use for loop*/
-/*calculate the result to compare*/
-	for (i = 0; s1[i] != '\0' && result == 0; i++)
+	while (*s1 && *s2)
 	{
-		result = s1[i] - s2[i];
+		if (*s1 != *s2)
+			return (*s1 - *s2);
+		s1++;
+		s2++;
 	}
-	return (result);
+	if (*s1 == *s2)
+		return (0);
+	else
+		return (*s1 < *s2 ? -1 : 1);
 }
 
 /**
@@ -43,15 +45,12 @@ int _strcmp(char *s1, char *s2)
  * @needle: substring to find
  * Return: address
 */
-char *starts_with(const char *cat, const char *kitty)
+char *starts_with(const char *haystack, const char *needle)
 {
-    while (*kitty) {
-        if (*kitty != *cat)
-            return NULL;
-        kitty++;
-        cat++;
-    }
-    return (char *)cat;
+	while (*needle)
+		if (*needle++ != *haystack++)
+			return (NULL);
+	return ((char *)haystack);
 }
 
 /**
@@ -62,16 +61,12 @@ char *starts_with(const char *cat, const char *kitty)
  */
 char *_strcat(char *dest, char *src)
 {
-	int i = 0, j = 0;
+	char *ret = dest;
 
-	while (dest[j] != '\0')
-		j++;
-	while (src[i] != '\0')
-	{
-		dest[j] = src[i];
-		j++;
-		i++;
-	}
-	dest[j] = '\0';
-	return (dest);
+	while (*dest)
+		dest++;
+	while (*src)
+		*dest++ = *src++;
+	*dest = *src;
+	return (ret);
 }
