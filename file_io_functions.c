@@ -13,12 +13,12 @@ char *get_history_file (info_t *info)
 	if (!dir)
 		return (NULL);
 	buf = malloc(sizeof(char) * (_strlength(dir) + _strlength(HIST_FILE) + 2));
-	if (buf)
+	if (!buf)
 		return (NULL);
 	buf[0] = 0;
 	_strcpy(buf, dir);
 	_strcat(buf, "/");
-	strcat(buf, HIST_FILE);
+	_strcat(buf, HIST_FILE);
 	return (buf);
 }
 
@@ -33,7 +33,7 @@ int write_history(info_t *info)
 	char *filename = get_history_file(info);
 	list_t *node = NULL;
 
-	if (filename)
+	if (!filename)
 		return (-1);
 	fd = open(filename, O_CREAT | O_TRUNC | O_RDWR, 0644);
 	free(filename);
