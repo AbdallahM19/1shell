@@ -1,41 +1,54 @@
 #include "shell.h"
 
-char *_strncat(char *cat, char *kitty, int num)
+char *_strncat(char *dest, char *src, int n)
 {
 	int i, j;
+	char *s = dest;
 
-	for (i = 0; kitty[i] != '\0'; i++)
-		;
-	for (j = 0; cat[j] != 0 && j < num; j++)
+	i = 0;
+	j = 0;
+	while (dest[i] != '\0')
+		i++;
+	while (src[j] != '\0' && j < n)
 	{
-		kitty[i + j] = cat[j];
+		dest[i] = src[j];
+		i++;
+		j++;
 	}
-	if (j < num)
-		kitty[j] ='\0';
-	return (kitty);
+	if (j < n)
+		dest[i] = '\0';
+	return (s);
 }
 
-char *_strncpy(char *cat, char *kitty, int num)
+char *_strncpy(char *dest, char *src, int n)
 {
-	int x = 0, y = 0;
+	int i, j;
+	char *s = dest;
 
-	for (; kitty[x] != '\0' && x < num-1; x++, y++)
-		cat[y] = kitty[x];
-	if (y < num)
+	i = 0;
+	while (src[i] != '\0' && i < n - 1)
 	{
-		for (; y < num; y++)
-			cat[y] = '\0';
+		dest[i] = src[i];
+		i++;
 	}
-	return (cat);
+	if (i < n)
+	{
+		j = i;
+		while (j < n)
+		{
+			dest[j] = '\0';
+			j++;
+		}
+	}
+	return (s);
 }
 
-char *_strchr(char *p, char x)
+char *_strchr(char *s, char c)
 {
-	while (*p != '\0')
-	{
-		if (*p == x)
-			return (p);
-		p++;
-	}
+	do {
+		if (*s == c)
+			return (s);
+	} while (*s++ != '\0');
+
 	return (NULL);
 }
